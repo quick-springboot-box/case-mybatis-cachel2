@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.openmind.dao.OrderDao">
+    <cache/>
+    <parameterMap id="orderParam" type="com.openmind.domain.Order"/>
+    <resultMap id="ordersMap" type="com.openmind.domain.Order">
+        <result column="id" property="id"/>
+        <result column="amount" property="amount"/>
+        <result column="desc" property="desc"/>
+        <result column="created_time" property="createdTime"/>
+    </resultMap>
+
+    <sql id="base_cols">
+        `id`, amount, `desc`, created_time
+    </sql>
+
+    <select id="getOrder"  resultMap="ordersMap" parameterType="java.lang.Long">
+        select
+        <include refid="base_cols"/>
+        from orders
+        WHERE id = #{id}
+    </select>
+</mapper>
