@@ -25,4 +25,7 @@ INSERT INTO `box-mybatis`.`orders` (`id`, `amount`, `desc`, `createdTime`) VALUE
 
 
 ## access api 
-https://github.com/quick-springboot-box/case-mybatis-cachel2
+curl -X GET \
+  http://192.168.37.13:8080/order/get/1 \
+  -H 'cache-control: no-cache' \
+  -H 'postman-token: 61c3bc5a-e973-3cf6-c49f-9083e95432af'
