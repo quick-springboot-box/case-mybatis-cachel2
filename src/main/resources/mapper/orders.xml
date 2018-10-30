@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.openmind.dao.OrderDao">
-    <cache/>
+    <cache eviction="FIFO" size="3" readOnly="true" type="com.openmind.dao.cachel2.MybatisRedisCache">
+        <property name="flushInterval" value="600000"/>
+    </cache>
     <parameterMap id="orderParam" type="com.openmind.domain.Order"/>
     <resultMap id="ordersMap" type="com.openmind.domain.Order">
         <result column="id" property="id"/>
@@ -14,7 +16,7 @@
         `id`, amount, `desc`, created_time
     </sql>
 
-    <select id="getOrder"  resultMap="ordersMap" parameterType="java.lang.Long">
+    <select id="getOrder"  resultMap="ordersMap" parameterType="java.lang.Long" useCache="true">
         select
         <include refid="base_cols"/>
         from orders
