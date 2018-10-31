@@ -16,17 +16,24 @@ public class TestMybatisCachel2 {
     private OrderService service;
 
     @Test
-    public void test(){
-        final Order order = service.get(1l);
-        System.out.println(order.getId());
-        System.out.println(order.getAmount());
-        System.out.println(order.getCreatedTime());
-        System.out.println(order.getDesc());
+    public void test() {
+        final long start = System.currentTimeMillis();
+        Order order = null;
+        for (int i = 0; i < 10000; i++) {
+            order = service.get(1l);
+        }
+        if (order != null) {
+            System.out.println(order.getId());
+            System.out.println(order.getAmount());
+            System.out.println(order.getCreatedTime());
+            System.out.println(order.getDesc());
+        }
 
+        System.out.println("time elapse: " + (System.currentTimeMillis() - start));
     }
 
     @Test
-    public void update(){
+    public void update() {
         final Order order = new Order();
         order.setId(1l);
         order.setDesc("what is the fuck");
