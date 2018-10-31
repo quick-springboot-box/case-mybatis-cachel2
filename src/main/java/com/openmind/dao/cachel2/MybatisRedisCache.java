@@ -4,7 +4,6 @@ import com.openmind.util.SpringContextHolder;
 import org.apache.ibatis.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -21,12 +20,20 @@ public class MybatisRedisCache implements Cache {
 
     private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
 
-    private RedisTemplate<String, Object> redisTemplate = SpringContextHolder.getBean("redisTemplate");
+    private RedisTemplate<String, Object> redisTemplate;
 
     private String id;
 
     public MybatisRedisCache(String id) {
         this.id = id;
+    }
+
+
+    private RedisTemplate<String, Object> getRedisTemplate() {
+        if (redisTemplate == null) {
+            redisTemplate = SpringContextHolder.getBean("redisTemplate");
+        }
+        return redisTemplate;
     }
 
     @Override
@@ -36,8 +43,8 @@ public class MybatisRedisCache implements Cache {
 
     @Override
     public void putObject(Object o, Object o1) {
-        if (o1 == null) {
-            redisTemplate.opsForValue().set(o.toString(), o1, 60, TimeUnit.SECONDS);
+        if (o1 != null) {
+            getRedisTemplate().opsForValue().set(o.toString(), o1, 60, TimeUnit.SECONDS);
         }
     }
 
@@ -47,7 +54,7 @@ public class MybatisRedisCache implements Cache {
             return null;
         }
 
-        final Object o1 = redisTemplate.opsForValue().get(o.toString());
+        final Object o1 = getRedisTemplate().opsForValue().get(o.toString());
         return o1;
     }
 
@@ -57,21 +64,21 @@ public class MybatisRedisCache implements Cache {
             return null;
         }
 
-        redisTemplate.delete(o.toString());
+        getRedisTemplate().delete(o.toString());
         return null;
     }
 
     @Override
     public void clear() {//todo
-        Set<String> keys = redisTemplate.keys("*:" + this.id + "*");
+        Set<String> keys = getRedisTemplate().keys("*:" + this.id + "*");
         if (!CollectionUtils.isEmpty(keys)) {
-            redisTemplate.delete(keys);
+            getRedisTemplate().delete(keys);
         }
     }
 
     @Override
     public int getSize() {
-        Long size = (Long) redisTemplate.execute(new RedisCallback<Long>() {
+        Long size = (Long) getRedisTemplate().execute(new RedisCallback<Long>() {
             @Override
             public Long doInRedis(RedisConnection connection) throws DataAccessException {
                 return connection.dbSize();
