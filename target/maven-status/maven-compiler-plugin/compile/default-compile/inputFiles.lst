@@ -1,9 +1,0 @@
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/dao/cachel2/MybatisRedisCache.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/controller/OrderController.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/StartUpApplication.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/config/RedisConfig.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/util/SpringContextHolder.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/service/OrderService.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/domain/Order.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/service/impl/OrderServiceImpl.java
-/workspace/gitlab.com/spring-boot-box/box-mybatis-l2cache/src/main/java/com/openmind/dao/OrderDao.java
