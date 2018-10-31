@@ -44,7 +44,7 @@ public class MybatisRedisCache implements Cache {
     @Override
     public void putObject(Object o, Object o1) {
         if (o1 != null) {
-            getRedisTemplate().opsForValue().set(o.toString(), o1, 60, TimeUnit.SECONDS);
+            getRedisTemplate().opsForValue().set(o.toString(), o1, 180, TimeUnit.SECONDS);
         }
     }
 
@@ -55,6 +55,7 @@ public class MybatisRedisCache implements Cache {
         }
 
         final Object o1 = getRedisTemplate().opsForValue().get(o.toString());
+        System.out.println("---> redis cache hitted <---");
         return o1;
     }
 

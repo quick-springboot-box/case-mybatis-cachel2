@@ -16,4 +16,16 @@ public class OrderServiceImpl implements OrderService{
     public Order get(Long id) {
         return dao.getOrder(id);
     }
+
+    @Override
+    public void update(Order o) {
+        if (o == null) {
+            return ;
+        }
+
+        if(o.getDesc() == null){
+            return ;
+        }
+        dao.update(o);
+    }
 }
